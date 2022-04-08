@@ -1,0 +1,329 @@
+﻿<krpano version="1.19" title="Virtual Tour">
+
+	
+	<include url="Side Menu/sidemenu.xml" />
+	<include url="skin/vtourskin.xml" />
+	<include url="plugins/compassSM/compassSM.xml" />
+
+	<!-- customize skin settings: maps, gyro, webvr, thumbnails, tooltips, layout, design, ... -->
+	<skin_settings maps="false"
+	               maps_type="google"
+	               maps_bing_api_key=""
+	               maps_google_api_key=""
+	               maps_zoombuttons="false"
+	               gyro="true"
+	               webvr="true"
+	               webvr_gyro_keeplookingdirection="false"
+	               webvr_prev_next_hotspots="true"
+	               littleplanetintro="false"
+	               title="true"
+	               thumbs="true"
+	               thumbs_width="120" thumbs_height="80" thumbs_padding="10" thumbs_crop="0|40|240|160"
+	               thumbs_opened="false"
+	               thumbs_text="false"
+	               thumbs_dragging="true"
+	               thumbs_onhoverscrolling="false"
+	               thumbs_scrollbuttons="false"
+	               thumbs_scrollindicator="false"
+	               thumbs_loop="false"
+	               tooltips_buttons="true"
+	               tooltips_thumbs="true"
+	               tooltips_hotspots="true"
+	               tooltips_mapspots="true"
+	               deeplinking="false"
+	               loadscene_flags="MERGE"
+	               loadscene_blend="OPENBLEND(0.5, 0.0, 0.75, 0.05, linear)"
+	               loadscene_blend_prev="SLIDEBLEND(0.5, 180, 0.75, linear)"
+	               loadscene_blend_next="SLIDEBLEND(0.5,   0, 0.75, linear)"
+	               loadingtext="loading..."
+	               layout_width="100%"
+	               layout_maxwidth="814"
+	               controlbar_width="-24"
+	               controlbar_height="40"
+	               controlbar_offset="20"
+	               controlbar_offset_closed="-40"
+	               controlbar_overlap.no-fractionalscaling="10"
+	               controlbar_overlap.fractionalscaling="0"
+	               design_skin_images="vtourskin.png"
+	               design_bgcolor="0x2D3E50"
+	               design_bgalpha="0.8"
+	               design_bgborder="0"
+	               design_bgroundedge="1"
+	               design_bgshadow="0 4 10 0x000000 0.3"
+	               design_thumbborder_bgborder="3 0xFFFFFF 1.0"
+	               design_thumbborder_padding="2"
+	               design_thumbborder_bgroundedge="0"
+	               design_text_css="color:#FFFFFF; font-family:Arial;"
+	               design_text_shadow="1"
+	               />
+
+	<!--
+	    For an alternative skin design either change the <skin_settings> values 
+	    from above or optionally include one of the predefined designs from below.
+	-->
+	<include url="skin/vtourskin_design_flat_light.xml"  /> 
+	<!-- include url="skin/vtourskin_design_glass.xml"       /> -->
+	<!-- <include url="skin/vtourskin_design_ultra_light.xml" /> -->
+	<!-- <include url="skin/vtourskin_design_117.xml"         /> -->
+	<!-- <include url="skin/vtourskin_design_117round.xml"    /> -->
+	<!-- <include url="skin/vtourskin_design_black.xml"       /> -->
+
+
+	<!-- startup action - load the first scene -->
+	<action name="startup" autorun="onstart">
+		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
+		loadscene(get(startscene), null, MERGE);
+		if(startactions !== null, startactions() );
+		set(edit_compas,true);
+	</action>
+
+
+	
+	<scene name="scene_mob_middle_cam_01_p1" title="cam 01_p1"  lat="" lng="" heading="" onstart="korrect_comp(-32.00); set(plugin[radar2].visible, true); set(plugin[centerMapRadar2].visible, true);" tooltips="cam1">
+
+		<view hlookat="3.674" vlookat="0.438" fovtype="MFOV" fov="120.000" maxpixelzoom="1.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<image>
+			<cube url="panos/mob_middle_cam_01_p1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" url="plugins/vtourskin_hotspot.png"  distorted="false" scale="0.2" ath="5.805" atv="7.002" onclick="loadscene(scene_mob_middle_cam_03_p1 ,,, BLEND(0.5, easeinquad))" />
+		<hotspot name="spot2" url="plugins/vtourskin_hotspot.png" distorted="false" scale="0.2" ath="-178.107" atv="16.527" onclick="loadscene(scene_mob_middle_cam_08_p1 ,,, BLEND(0.35, easeinquad))" />
+		<hotspot name="spot3" url="plugins/vtourskin_hotspot.png" distorted="false" scale="0.2" ath="-2.362" atv="4.833" onclick="loadscene(scene_mob_middle_cam_02_p1 ,,, BLEND(0.5, easeinquad))"/>
+
+		<hotspot name="measure1" url="plugins/red circle.png" visible="false" scale="0.5" ath="-8.362" atv="4.833"  ondown="draghotspot();" />
+		<hotspot name="measure2" url="plugins/red circle.png" visible="false" scale="0.5" ath="-2.362" atv="4.833"  ondown="draghotspot();" />
+
+		<hotspot name="heart1" url="plugins/heart.png" visible="true" scale="0.3" ath="-270.362" atv="165.833"  
+		onover="set(scale,0.4);" onout="set(scale,0.3);"
+		onclick="
+			if(layer[chair1].visible==false,
+			set(layer[Wish_list_bg].visible,true);
+			set(varY,get(layer[wishLine].y));
+			add(varY,82);
+			set(layer[wishLine].y,get(varY));
+			set(layer[chair1].y,get(varY));
+			set(alpha,0.5);
+			set(layer[chair1].visible,true);
+			set(hotspot[heart1].handcursor,false);
+			set(H1,get(varY)););
+			" />
+		<hotspot name="heart2" url="plugins/heart.png" visible="true" scale="0.3" ath="-270.362" atv="160.833" 
+		 onover="set(scale,0.4);" onout="set(scale,0.3);"
+		 onclick="
+			if(layer[chair2].visible==false,
+			set(layer[Wish_list_bg].visible,true);
+			set(varY,get(layer[wishLine].y));
+			add(varY,82);
+			set(layer[wishLine].y,get(varY));
+			set(alpha,0.5);
+			set(layer[chair2].y,get(varY));
+			set(layer[chair2].visible,true);
+			set(hotspot[heart2].handcursor,false);
+			set(H2,get(varY)););
+			" />
+		<hotspot name="heart3" url="plugins/heart.png" visible="true" scale="0.3" ath="-270.362" atv="170.833"  
+		 onover="set(scale,0.4);" onout="set(scale,0.3);"
+		 onclick="
+			if(layer[chair3].visible==false,
+			set(layer[Wish_list_bg].visible,true);
+			set(varY,get(layer[wishLine].y));
+			add(varY,82);
+			set(layer[wishLine].y,get(varY));
+			set(alpha,0.5);
+			set(layer[chair3].y,get(varY));
+			set(layer[chair3].visible,true);
+			set(hotspot[heart3].handcursor,false);
+			set(H3,get(varY)););
+			" />
+		<hotspot name="heart4" url="plugins/heart.png" visible="true" scale="0.3" ath="-240.362" atv="155.833"  
+		 onover="set(scale,0.4);" onout="set(scale,0.3);"
+		 onclick="
+			if(layer[book1].visible==false,
+			set(layer[Wish_list_bg].visible,true);
+			set(varY,get(layer[wishLine].y));
+			add(varY,82);
+			set(layer[wishLine].y,get(varY));
+			set(alpha,0.5);
+			set(layer[book1].y,get(varY));
+			set(layer[book1].visible,true);
+			set(hotspot[heart4].handcursor,false);
+			set(H4,get(varY)););
+			" />
+		<hotspot name="heart5" url="plugins/heart.png" visible="true" scale="0.3" ath="-217.362" atv="162.833"  
+		 onover="set(scale,0.4);" onout="set(scale,0.3);"
+		 onclick="
+			if(layer[book2].visible==false,
+			set(layer[Wish_list_bg].visible,true);
+			set(varY,get(layer[wishLine].y));
+			add(varY,82);
+			set(layer[wishLine].y,get(varY));
+			set(alpha,0.5);
+			set(layer[book2].y,get(varY));
+			set(layer[book2].visible,true);
+			set(hotspot[heart5].handcursor,false);
+			set(H5,get(varY)););
+			" />
+
+	</scene>
+
+	<scene name="scene_mob_middle_cam_02_p1" title="cam 02"  onstart="korrect_comp(-25.52);"  lat="" lng="" heading="">
+
+		<view hlookat="106.937" vlookat="-1.822" fovtype="MFOV" fov="120.000" maxpixelzoom="1.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		
+
+		<image>
+			<cube url="panos/mob_middle_cam_02_p1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" url="plugins/vtourskin_hotspot.png" distorted="false" ath="-45.873" atv="11.265" linkedscene="scene_mob_middle_cam_03_p1" />
+		<hotspot name="spot2" url="plugins/vtourskin_hotspot.png" distorted="false" ath="-12.282" atv="16.399" linkedscene="scene_mob_middle_cam_01_p1" />
+
+	</scene>
+
+	<scene name="scene_mob_middle_cam_03_p1" title="cam 03" onstart="korrect_comp(-25.52);"  lat="" lng="" heading="" >
+
+		<view hlookat="227.998" vlookat="-1.105" fovtype="MFOV" fov="120.000" maxpixelzoom="1.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		
+
+		<image>
+			<cube url="panos/mob_middle_cam_03_p1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" url="plugins/vtourskin_hotspot.png" distorted="false" ath="31.770" atv="10.084" linkedscene="scene_mob_middle_cam_02_p1" />
+		<hotspot name="spot2" url="plugins/vtourskin_hotspot.png" distorted="false" ath="-176.040" atv="-1.938" linkedscene="scene_mob_middle_cam_04_p1" />
+		
+
+	</scene>
+
+	<scene name="scene_mob_middle_cam_04_p1" title="cam 04" onstart="korrect_comp(-25.52);"  lat="" lng="" heading="" >
+
+		<view hlookat="160.072" vlookat="10.351" fovtype="MFOV" fov="120.000" maxpixelzoom="1.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		
+
+		<image>
+			<cube url="panos/mob_middle_cam_04_p1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" url="plugins/vtourskin_hotspot.png" distorted="false" ath="-0.326" atv="2.102" linkedscene="scene_mob_middle_cam_03_p1" />
+		<hotspot name="spot2" url="plugins/vtourskin_hotspot.png"  distorted="false" ath="106.484" atv="19.685" linkedscene="scene_mob_middle_cam_05_p1" />
+		<hotspot name="spot3" url="plugins/vtourskin_hotspot.png" distorted="false" ath="-164.572" atv="22.053" linkedscene="scene_mob_middle_cam_06_p1" />
+		
+	</scene>
+
+	<scene name="scene_mob_middle_cam_05_p1" title="cam 05" onstart="korrect_comp(-25.52);" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="1.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		
+
+		<image>
+			<cube url="panos/mob_middle_cam_05_p1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" url="plugins/vtourskin_hotspot.png" distorted="false" ath="72.236" atv="11.581" linkedscene="scene_mob_middle_cam_04_p1" />
+		<hotspot name="spot2" url="plugins/vtourskin_hotspot.png" distorted="false" ath="-0.445" atv="21.556" linkedscene="scene_mob_middle_cam_06_p1" />
+		
+
+	</scene>
+
+	<scene name="scene_mob_middle_cam_06_p1" title="cam 06" onstart="korrect_comp(-25.52);"  lat="" lng="" heading="" >
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="1.0" fovmin="70" fovmax="140" limitview="auto" />
+
+	
+
+		<image>
+			<cube url="panos/mob_middle_cam_06_p1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" url="plugins/vtourskin_hotspot.png" distorted="false" ath="-177.437" atv="22.500" linkedscene="scene_mob_middle_cam_05_p1" />
+		<hotspot name="spot2" url="plugins/vtourskin_hotspot.png" distorted="false" ath="1.073" atv="10.659" linkedscene="scene_mob_middle_cam_07_p1" />
+		<hotspot name="spot3" url="plugins/vtourskin_hotspot.png" distorted="false" ath="64.517" atv="34.547" linkedscene="scene_mob_middle_cam_04_p1" />
+
+	</scene>
+
+	<scene name="scene_mob_middle_cam_07_p1" title="cam 07" onstart="korrect_comp(-25.52);"  lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		
+
+		<image>
+			<cube url="panos/mob_middle_cam_07_p1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" distorted="false" ath="-0.897" atv="22.741" linkedscene="scene_mob_middle_cam_06_p1" />
+
+	</scene>
+
+	<scene name="scene_mob_middle_cam_08_p1" title="cam 08" onstart="korrect_comp(-32.00);"  lat="" lng="" heading="" tooltips="cam8">
+
+		<view hlookat="183.265" vlookat="5.634" fovtype="MFOV" fov="120.000" maxpixelzoom="1.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		
+
+		<image>
+			<cube url="panos/mob_middle_cam_08_p1.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" style="skin_hotspotstyle" distorted="false" ath="4.965" atv="18.991" linkedscene="scene_mob_middle_cam_01_p1"  />
+
+	</scene>
+	<scene name="scene_mob_emp_cam_01_2021-10-09_final" title="mob_emp_cam 01_2021-10-09_final" onstart="korrect_comp(-32.00);" lat="" lng="" heading="" visible="flase">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+			<image>
+			<cube url="panos/mob_emp_cam_01_2021-10-09_final.tiles/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot1" url="plugins/vtourskin_hotspot.png" distorted="false"  ath="5.805" atv="7.002" onclick="loadscene(scene_mob_middle_cam_03_p1 ,,, BLEND(0.5, easeinquad))" />
+		<hotspot name="spot2" url="plugins/vtourskin_hotspot.png" distorted="false" ath="-178.107" atv="16.527" onclick="loadscene(scene_mob_middle_cam_08_p1 ,,, BLEND(0.35, easeinquad))" />
+		<hotspot name="spot3" url="plugins/vtourskin_hotspot.png" distorted="false" ath="-2.362" atv="4.833" onclick="loadscene(scene_mob_middle_cam_02_p1 ,,, BLEND(0.5, easeinquad))"/>
+
+	</scene>
+	<plugin name="hotspot_pos_info"
+	type="text"
+	html="drag red the spots..."
+	css="color:#000000; font-family:Aller; text-align:center; font-size:15px;'"
+	padding="8"
+	align="top" x="0" y="40"
+	width="200"
+	enabled="true"
+	keep="true"
+	visible="false"
+	/>
+	<action name="draghotspot">
+		spheretoscreen(ath, atv, hotspotcenterx, hotspotcentery, calc(mouse.stagex LT stagewidth/2 ? 'l' : 'r'));
+		sub(drag_adjustx, mouse.stagex, hotspotcenterx);
+		sub(drag_adjusty, mouse.stagey, hotspotcentery);
+		asyncloop(pressed,
+			sub(dx, mouse.stagex, drag_adjustx);
+			sub(dy, mouse.stagey, drag_adjusty);
+			screentosphere(dx, dy, ath, atv);
+			print_hotspot_pos();
+		  );
+	</action>
+
+
+	
+	<action name="print_hotspot_pos"><![CDATA[
+		set(var1,get(hotspot[measure1].atv));
+		set(var2,get(hotspot[measure1].ath));
+		set(var3,get(hotspot[measure2].atv));
+		set(var4,get(hotspot[measure2].ath));
+
+		screentosphere(var1, var2, x1, y1);
+		screentosphere(var3, var4, x2, y2);
+
+		sub(x2,x1);
+		sub(y2,y1);
+
+		Math.pow(x2,2);
+		Math.pow(y2,2);
+
+		add(x2,y2);
+		Math.sqrt(result,x2);
+		mul(result,0.4);
+		roundval(result,1);
+
+		calc(plugin[hotspot_pos_info].html, '&nbsp;&nbsp;"' + varY + '"[br]&nbsp;);
+					
+	]]></action>
+	
+</krpano>
